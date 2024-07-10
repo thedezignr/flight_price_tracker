@@ -75,7 +75,7 @@ def flight_tracker_us():
   
   # API parameter
   params_us = {
-    "api_key": "353ddfee4b7e65322e0091cd0b62c6d187773fc4567dffc4daf4cb475ac9dec4",
+    "api_key": API_KEY,
     "engine": "google_flights",
     "hl": "en",
     "gl": "us",
