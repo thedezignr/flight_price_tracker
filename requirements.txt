@@ -1,0 +1,7 @@
+pandas
+serpapi
+os
+dotenv
+google-search-results
+
+-e .
