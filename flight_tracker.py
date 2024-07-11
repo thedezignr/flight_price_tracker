@@ -1,5 +1,6 @@
 from serpapi import GoogleSearch
 import pandas as pd
+from pandas import json_normalize
 from dotenv import load_dotenv
 import os
 
@@ -21,7 +22,7 @@ def flight_tracker_uk():
     "gl": "uk",
     "departure_id": "ABV, LOS",
     "arrival_id": "LHR, LGW",
-    "outbound_date": "2024-07-10",
+    "outbound_date": "2024-07-11",
     "currency": "USD",
     "type": "2"
   }
@@ -30,11 +31,23 @@ def flight_tracker_uk():
   search_uk = GoogleSearch(params_uk)
   results_uk = search_uk.get_dict()
 
-  # Converts results to dataframe
-  df_results_uk_best = pd.DataFrame.from_dict(results_uk["best_flights"])
-  df_results_uk_other = pd.DataFrame.from_dict(results_uk["other_flights"])
-  # Prints results
-  print(df_results_uk_best, df_results_uk_other)
+  # Normalize flight details
+  best_flights = results_uk["best_flights"]
+  other_flights = results_uk["other_flights"]
+
+  # Flatten best_flight details
+  best_flights_data = json_normalize(
+      [flight for best_flight in best_flights for flight in best_flight["flights"]],
+      sep='_'
+  )
+
+  # Flatten other_flight details
+  other_flights_data = json_normalize(
+      [flight for best_flight in best_flights for flight in best_flight["flights"]],
+      sep='_'
+  )
+
+  print(best_flights_data, other_flights_data)
 
 # Call the function
 flight_tracker_uk()
@@ -61,9 +74,23 @@ def flight_tracker_ca():
   search_ca = GoogleSearch(params_ca)
   results_ca = search_ca.get_dict()
 
-  df_results_ca_best = pd.DataFrame.from_dict(results_ca["best_flights"])
-  df_results_ca_other = pd.DataFrame.from_dict(results_ca["other_flights"])
-  print(df_results_ca_best, df_results_ca_other)
+  # Normalize flight details
+  best_flights = results_ca["best_flights"]
+  other_flights = results_ca["other_flights"]
+
+  # Flatten best_flight details
+  best_flights_data = json_normalize(
+      [flight for best_flight in best_flights for flight in best_flight["flights"]],
+      sep='_'
+  )
+
+  # Flatten other_flight details
+  other_flights_data = json_normalize(
+      [flight for best_flight in best_flights for flight in best_flight["flights"]],
+      sep='_'
+  )
+
+  print(best_flights_data, other_flights_data)
 
 flight_tracker_ca()
 
@@ -90,8 +117,22 @@ def flight_tracker_us():
   search_us = GoogleSearch(params_us)
   results_us = search_us.get_dict()
 
-  df_results_us_best = pd.DataFrame.from_dict(results_us["best_flights"])
-  df_results_us_other = pd.DataFrame.from_dict(results_us["other_flights"])
-  print(df_results_us_best)
+  # Normalize flight details
+  best_flights = results_us["best_flights"]
+  other_flights = results_us["other_flights"]
+
+  # Flatten best_flight details
+  best_flights_data = json_normalize(
+      [flight for best_flight in best_flights for flight in best_flight["flights"]],
+      sep='_'
+  )
+
+  # Flatten other_flight details
+  other_flights_data = json_normalize(
+      [flight for best_flight in best_flights for flight in best_flight["flights"]],
+      sep='_'
+  )
+
+  print(best_flights_data, other_flights_data)
 
 flight_tracker_us()
